@@ -6,7 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=2">
   </head>
   <body>
-  
+    <script>
+      function checkMobile () {
+        var phone_number = document.ssm_info.phone.value;
+        
+        alert(phone_number);
+        
+        return true;
+      }
+      
+      
+    </script>
+
+    
     <form name="ssm_info" action="https://api.whatsapp.com/send">
       <b>Save Soil Movement - Resources</b>
       <br/><br/>
@@ -34,27 +46,8 @@ https://studentsforsoil.consciousplanet.org/
 
 #SaveSoil, Lets make it happen
 </textarea><br/><br/>
-         <input type="submit" value="Send"/>
+         <input type="submit" value="Send" onSubmit="javascript:checkMobile()"/>
     </form>
     
-    <script>
-      var content += "Know more about the *Save Soil Movement*" + "\n";
-          content += "Website" + "\n" ;
-          content += "https://savesoil.org" + "\n" + "\n";
-      
-          content += "Become an Earth Buddy" + "\n"; 
-          content += "https://bit.ly/ipl-savesoil" + "\n"+ "\n";
-      
-          content += "Toolkit" + "\n";
-          content += "https://savesoil.org/toolkit" + "\n" + "\n";
-
-          content += "Daily Activity" + "\n";
-          content += "https://www.consciousplanet.org/daily-activity" + "\n" + "\n";
-
-          content += "Even your child can SaveSoil" + "\n";
-          content += "https://studentsforsoil.consciousplanet.org/" + "\n" + "\n";
-
-          content += "#SaveSoil, Lets make it happen";
-    </script>
   </body>
 </html>
