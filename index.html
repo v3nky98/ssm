@@ -12,8 +12,11 @@
         
         is_valid = phone_number && phone_number.length >= 13;
                 
-        if (is_valid) {      
-           return is_valid;
+        if (is_valid) {    
+           document.ssm_info.action="https://api.whatsapp.com/send";
+           document.ssm_info.submit();
+        } else {
+           alert("Enter a valid WhatsApp #");
         }
       }
       
@@ -21,8 +24,8 @@
     </script>
 
     
-    <form name="ssm_info" action="https://api.whatsapp.com/send" onSubmit="checkMobile()">
-      <b>Save Soil Movement - Resources v3.4</b>
+    <form name="ssm_info"  onSubmit="checkMobile()">
+      <b>Save Soil Movement - Resources v1.0.5</b>
       <br/><br/>
         Enter Mobile #<br/>
         <input name="phone" value="+91"/><br/><br/>
