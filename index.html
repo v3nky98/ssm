@@ -10,8 +10,10 @@
       function checkMobile () {
         var phone_number = document.ssm_info.phone.value;
         
-        is_valid = phone_number && phone_number.length > 13;
+        is_valid = phone_number && phone_number.length >= 13;
                 
+        alert(is_valid);
+        
         return is_valid;
       }
       
@@ -20,7 +22,7 @@
 
     
     <form name="ssm_info" action="https://api.whatsapp.com/send" onSubmit="checkMobile()">
-      <b>Save Soil Movement - Resources v3.0</b>
+      <b>Save Soil Movement - Resources v4.0</b>
       <br/><br/>
         Mobile #<br/>
         <input name="phone" value="+91"/><br/><br/>
