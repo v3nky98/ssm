@@ -12,9 +12,9 @@
         
         is_valid = phone_number && phone_number.length >= 13;
                 
-        alert(is_valid);
-        
-        return is_valid;
+        if (is_valid) {      
+           return is_valid;
+        }
       }
       
       
@@ -22,7 +22,7 @@
 
     
     <form name="ssm_info" action="https://api.whatsapp.com/send" onSubmit="checkMobile()">
-      <b>Save Soil Movement - Resources v3.3</b>
+      <b>Save Soil Movement - Resources v3.4</b>
       <br/><br/>
         Enter Mobile #<br/>
         <input name="phone" value="+91"/><br/><br/>
