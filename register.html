@@ -80,14 +80,13 @@
           xhr.open ('GET', url, true);
        
           xhr.ontimeout = function () {
-            log("Signup status >> Timed out");
+            log("Signup CP status >> Timed out");
             sendLinks();
           }
         
           xhr.onload = function () {
             var err = JSON.parse(xhr.response);
-            log ("Signup status >> " + err.statusCode);
-            sendLinks();
+            log ("Signup CP status >> " + err.statusCode);
           }
         
         xhr.send();
