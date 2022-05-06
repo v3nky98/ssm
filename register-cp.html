@@ -28,23 +28,19 @@
       function signup () {
         log ("Signing up as Earth Buddy");
         
-        var jsonRequest = JSON.parse('{"name":"Venkatesh Rangarajan","ipCountry":"IN","privacyPolicy":1,"sms":1,"localEarthBuddy":1,"mobile":"9665357564","countryCode":"+91"}');
+        var requestParams = "action=cplanet&type=cplanet&language=en&referrer=venky&country=IN&tnc=true&fullNameConsent=true";
+            
+        requestParams += "&name=" + document.ssm_info.name.value;
+        requestParams += "&whatsappNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
+        requestParams += "&phoneNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
         
-            jsonRequest.name = document.ssm_info.name.value;
-            jsonRequest.state = document.ssm_info.state.value;
-            jsonRequest.mobile = document.ssm_info.phone.value;
-            jsonRequest.countryCode = document.ssm_info.cou.value;
-        
-        var requestText = JSON.stringify(jsonRequest);
-        
-        const url = "https://api.consciousplanet.org/api/v1/addJoinvolunteer";
+        const url = "https://cplanet.ishayoga.live/register?" + requestParams;
         
         let xhr = new XMLHttpRequest();
         
           xhr.timeout = 10000;
-          xhr.open ('POST', url, true);
-          xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-        
+          xhr.open ('GET', url, true);
+       
           xhr.ontimeout = function () {
             log("Signup status >> Timed out");
             sendLinks();
@@ -52,7 +48,7 @@
         
           xhr.onload = function () {
             var err = JSON.parse(xhr.response);
-            log ("Signup status >> " + err.customMessage);
+            log ("Signup status >> " + err.statusCode);
             sendLinks();
           }
         
