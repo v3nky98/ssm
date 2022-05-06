@@ -22,7 +22,8 @@
       function processRequest () {
         checkName() &&
         checkMobile() &&
-        signup();
+        signup() &&
+        signupCP() ;
       }
       
       function signup () {
@@ -57,6 +58,39 @@
           }
         
         xhr.send(requestText);
+        
+        return true;
+        
+      }
+      
+      function signupCP () {
+        log ("Signing up on CP Pledge");
+        
+        var requestParams = "action=cplanet&type=cplanet&language=en&referrer=venky&country=IN&tnc=true&fullNameConsent=true";
+            
+        requestParams += "&name=" + document.ssm_info.name.value;
+        requestParams += "&whatsappNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
+        requestParams += "&phoneNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
+        
+        const url = "https://cplanet.ishayoga.live/register?" + requestParams;
+        
+        let xhr = new XMLHttpRequest();
+        
+          xhr.timeout = 10000;
+          xhr.open ('GET', url, true);
+       
+          xhr.ontimeout = function () {
+            log("Signup status >> Timed out");
+            sendLinks();
+          }
+        
+          xhr.onload = function () {
+            var err = JSON.parse(xhr.response);
+            log ("Signup status >> " + err.statusCode);
+            sendLinks();
+          }
+        
+        xhr.send();
         
         return true;
         
@@ -118,7 +152,7 @@
 
     
     <form name="ssm_info">
-      <b>Earth Buddy Signup & Links (v1.0.2)</b>
+      <b>Earth Buddy Signup & Links (v1.0.3)</b>
       <br/><br/>
         Name <br/>
         <input name="name" value="Venky" size="40" maxlength="50"/> <br/><br/>
