@@ -65,6 +65,12 @@
       function sendLinks () {
         log ("Sending links ...");
         
+        var send_links = confirm("Send links ?");
+        
+        if (! send_links) {
+          return false;
+        }
+        
         var wa_text = document.ssm_info.text.value;
         var phone_number = document.ssm_info.phone.value;
         var country = document.ssm_info.cou.value;
