@@ -121,7 +121,7 @@
         log ("Validating info - name");
         var name = document.ssm_info.name.value;
         
-        if (name && name.trim().length > 4) {
+        if (name && name.trim().length >= 4) {
           return true;
         } else {
           log ("Enter a valid name");
@@ -169,7 +169,7 @@
 
     
     <form name="ssm_info">
-      <b>Earth Buddy Signup & Links (v1.0.5)</b>
+      <b>Earth Buddy Signup & Links (v1.0.6)</b>
       <br/><br/>
         Name <br/>
         <input name="name" value="" size="40" maxlength="50"/> <br/><br/>
