@@ -5,7 +5,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.1">
   </head>
-  <body>
+  <body onload="javascript:prefill();">
     <script>
       var msg_area;
       
@@ -144,6 +144,24 @@
            log("Enter a valid country code & mobile #");
           return false;
         }
+      }
+      
+      function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+      }
+      
+      
+      function prefill () {
+        var name = getParameterByName("name");
+        var ph   = getParameterByName("phone");
+        var lang = getParameterByName("lang");
+        
+        if (name && ph) {
+           document.ssm_info.name.value=name;
+           document.ssm_info.phone.value=phone;
+        }
+        
       }
       
       
