@@ -19,14 +19,14 @@
         msg_area.innerHTML += "<b>" + msg_text + "</b> <br/>";
       }
       
-      function processRequest () {
+      function processRequest (confirm_wa_send) {
         checkName() &&
         checkMobile() &&
-        signup() &&
+        signup(confirm_wa_send) &&
         signupCP() ;
       }
       
-      function signup () {
+      function signup (confirm_wa_send) {
         log ("Signing up as Earth Buddy");
         
         var jsonRequest = JSON.parse('{"name":"Venkatesh Rangarajan","ipCountry":"IN","privacyPolicy":1,"sms":1,"localEarthBuddy":1,"mobile":"9665357564","countryCode":"+91"}');
@@ -48,13 +48,13 @@
         
           xhr.ontimeout = function () {
             log("Signup status >> Timed out");
-            sendLinks();
+            sendLinks(confirm_wa_send);
           }
         
           xhr.onload = function () {
             var err = JSON.parse(xhr.response);
             log ("Signup status >> " + err.customMessage);
-            sendLinks();
+            sendLinks(confirm_wa_send);
           }
         
         xhr.send(requestText);
@@ -95,10 +95,10 @@
         
       }
       
-      function sendLinks () {
+      function sendLinks (confirm_wa_send) {
         log ("Sending links ...");
         
-        var send_links = confirm("Send links ?");
+        var send_links = confirm_wa_send || confirm("Send links ?");
         
         if (! send_links) {
           return false;
@@ -156,11 +156,13 @@
         var name = getParameterByName("name");
         var ph   = getParameterByName("phone");
         var lang = getParameterByName("lang");
+        var confirm = getParameterByName("confirm");
         
         if (name && ph && name.trim().length >= 0 && ph.trim().length >= 10) {
            document.ssm_info.name.value=name;
            document.ssm_info.phone.value=ph;
-           processRequest();
+           confirm_wa_send = confirm && "true".equalsIgnoreCase(confirm)
+           processRequest(confirm_wa_send);
         }
         
       }
@@ -209,7 +211,7 @@ https://studentsforsoil.consciousplanet.org/
 
 #SaveSoil, Let's make it happen
 </textarea><br/><br/>
-         <input type="button" value="Register & Send links" onClick="javascript:init(); processRequest();"/>
+         <input type="button" value="Register & Send links" onClick="javascript:init(); processRequest(true);"/>
     </form>
     
     <div id="msg" name="msg"></div>
