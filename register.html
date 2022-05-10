@@ -161,7 +161,7 @@
         if (name && ph && name.trim().length >= 0 && ph.trim().length >= 10) {
            document.ssm_info.name.value=name;
            document.ssm_info.phone.value=ph;
-           confirm_wa_send = confirm && confirm.toLowerCase().equals("true");
+           confirm_wa_send = confirm && confirm.toLowerCase() === "true";
            processRequest(confirm_wa_send);
         }
         
@@ -172,7 +172,7 @@
 
     
     <form name="ssm_info">
-      <b>Earth Buddy Signup & Links (v1.0.10) </b>
+      <b>Earth Buddy Signup & Links (v1.0.11) </b>
       <br/><br/>
         Name <br/>
         <input name="name" value="" size="40" maxlength="50"/> <br/><br/>
