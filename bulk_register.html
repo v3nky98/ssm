@@ -1,0 +1,248 @@
+
+<html>
+  <head>
+    
+  <title>Save Soil Movement - Register</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.1">
+  </head>
+  <body onload="javascript:init(); prefill();">
+    <script>
+      var msg_area;
+      
+      function init () {
+        msg_area = document.getElementById("msg");
+        msg_area.innerHTML = "";
+        return true;
+      }
+      
+      function log (msg_text) {
+        msg_area.innerHTML += "<b>" + msg_text + "</b> <br/>";
+      }
+     
+      function processBulk (confirm_wa_send) {
+        var name_phone_txt = document.ssm_info.name_phone.value;
+        var name_phones = name_phone_txt.split("\n");
+
+        name_phones.forEach(sendLinksBulkRequest);
+        log("xxxxxxxxxx");
+        name_phones.forEach(processBulkRequest);
+      } 
+
+      function processBulkRequest(item, index, array) {
+        var name_phone = item.split("\t");
+         document.ssm_info.name.value = name_phone[0];
+         document.ssm_info.phone.value = name_phone[1];
+        processRequest(true);
+        log("--------");
+      }
+
+      function sendLinksBulkRequest(item, index, array) {
+        log("Action");
+        var name_phone = item.split("\t");
+         document.ssm_info.name.value = name_phone[0];
+         document.ssm_info.phone.value = name_phone[1];
+        sendLinks(true);
+      }
+
+      function processRequest (confirm_wa_send) {
+        checkName() &&
+        checkMobile() &&
+        signup(confirm_wa_send) &&
+        signupCP() ;
+      }
+      
+      function signup (confirm_wa_send) {
+        log ("Signing up as Earth Buddy");
+        
+        var jsonRequest = JSON.parse('{"name":"Venkatesh Rangarajan","ipCountry":"IN","privacyPolicy":1,"sms":1,"localEarthBuddy":1,"mobile":"9665357564","countryCode":"+91"}');
+        
+            jsonRequest.name = document.ssm_info.name.value;
+            jsonRequest.state = document.ssm_info.state.value;
+            jsonRequest.mobile = document.ssm_info.phone.value;
+            jsonRequest.countryCode = document.ssm_info.cou.value;
+        
+        var requestText = JSON.stringify(jsonRequest);
+        
+        const url = "https://api.consciousplanet.org/api/v1/addJoinvolunteer";
+        
+        let xhr = new XMLHttpRequest();
+        
+          xhr.timeout = 10000;
+          xhr.open ('POST', url, true);
+          xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+          xhr.ontimeout = function () {
+            log("Signup status >> Timed out : " + jsonRequest.name);
+          }
+        
+          xhr.onload = function () {
+            var err = JSON.parse(xhr.response);
+            log ("Signup status >> " + err.customMessage + " : " + jsonRequest.name);
+          }
+        
+        xhr.send(requestText);
+        
+        return true;
+        
+      }
+      
+      function signupCP () {
+        log ("Signing up on CP Pledge");
+        
+        var requestParams = "action=cplanet&type=cplanet&language=en&referrer=venky&country=IN&tnc=true&fullNameConsent=true";
+        var name = document.ssm_info.name.value;
+    
+        requestParams += "&name=" + document.ssm_info.name.value;
+        requestParams += "&whatsappNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
+        requestParams += "&phoneNumber=" + document.ssm_info.cou.value + document.ssm_info.phone.value;
+        
+        const url = "https://cplanet.ishayoga.live/register?" + requestParams;
+        
+        let xhr = new XMLHttpRequest();
+        
+          xhr.timeout = 10000;
+          xhr.open ('GET', url, true);
+       
+          xhr.ontimeout = function () {
+            log("Signup CP status >> Timed out : " + name);
+          }
+        
+          xhr.onload = function () {
+            var err = JSON.parse(xhr.response);
+            log ("Signup CP status >> " + err.statusCode + " :" + name);
+          }
+        
+        xhr.send();
+        
+        return true;
+        
+      }
+      
+      function sendLinks (confirm_wa_send) {
+        var wa_text = document.ssm_info.text.value;
+        var phone_number = document.ssm_info.phone.value;
+        var country = document.ssm_info.cou.value;
+        
+        document.wa_form.phone.value = country + phone_number;
+        document.wa_form.text.value  = wa_text;
+       
+        var encoded_url = encodeURI("https://api.whatsapp.com/send?phone=" +country + phone_number + "&text=" + wa_text); 
+           
+        var href_url = "<a target='_new' href='" + encoded_url + "'>Send Link</a>"; 
+
+        // document.wa_form.submit();
+        
+        log ("Click link to send message to " + document.ssm_info.name.value + " : " + country + phone_number + " " + href_url);
+
+      }
+      
+      function checkName () {
+        var name = document.ssm_info.name.value;
+        log ("Validating info - name " + name );
+
+        if (name && name.trim().length >= 4) {
+          return true;
+        } else {
+          log ("Enter a valid name");
+          return false;
+        } 
+      }
+      
+      function checkMobile () {
+        
+        var phone_number = document.ssm_info.phone.value;
+        var country = document.ssm_info.cou.value;
+
+        log ("Validating Mobile #" + country + phone_number);
+        
+        is_valid_co = country && country.trim().length >= 2;
+        is_valid_ph = phone_number && phone_number.trim().length >= 9;
+                
+        if (is_valid_co && is_valid_ph) {
+          return true;
+        } else {
+           log("Enter a valid country code & mobile #");
+          return false;
+        }
+      }
+      
+      function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+      }
+      
+      
+      function prefill () {
+        var name = getParameterByName("name");
+        var ph   = getParameterByName("phone");
+        var lang = getParameterByName("lang");
+        var confirm = getParameterByName("confirm");
+        
+        if (name && ph && name.trim().length >= 0 && ph.trim().length >= 10) {
+           document.ssm_info.name.value=name;
+           document.ssm_info.phone.value=ph;
+           confirm_wa_send = confirm && confirm.toLowerCase() === "true";
+           processRequest(confirm_wa_send);
+        }
+        
+      }
+      
+      
+    </script>
+
+    
+    <form name="ssm_info">
+      <b>Bulk Register - Earth Buddy </b>
+      <br/><br/>
+      Provide Name & Whatsapp number (separated by tab)<br/>
+      <textarea name="name_phone" cols="150" rows="10">Sample	9665357564</textarea> 
+      <br/> 
+        State<br/>
+        <select name="state" id="state" ><option value="">Select State</option><option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option><option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chandigarh">Chandigarh</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option><option value="Daman and Diu">Daman and Diu</option><option value="Delhi">Delhi</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jammu and Kashmir">Jammu and Kashmir</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Ladakh">Ladakh</option><option value="Lakshadweep">Lakshadweep</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra" selected=“true”>Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Puducherry">Puducherry</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttarakhand">Uttarakhand</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="West Bengal">West Bengal</option></select>
+        <br/>
+      
+        WhatsApp Message <br/>
+        <textarea name="text" rows="15" cols="40">
+Thanks for joining the Save Soil Session @ Hoerbiger
+
+Know more about the *Save Soil Movement*
+
+Website
+https://savesoil.org
+https://savesoil.org/hi (हिन्दी)
+https://savesoil.org/mr (मराठी)
+          
+Become an Earth Buddy
+https://bit.ly/ipl-savesoil
+
+Toolkit
+https://savesoil.org/toolkit
+
+Daily Activity
+https://www.consciousplanet.org/daily-activity
+          
+Follow on Twitter
+https://twitter.com/cpsavesoil
+
+Even your child can SaveSoil
+https://studentsforsoil.consciousplanet.org/
+
+#SaveSoil, Let's make it happen
+</textarea><br/><br/>
+         <input type="button" value="Register & Send links" onClick="javascript:init(); processBulk(true);"/>
+         <input type="text" name="name"></input>
+         <input type="text" name="cou" value="+91"></input>
+         <input type="text" name="phone"></input>
+    </form>
+    
+    <div id="msg" name="msg"></div>
+    
+    <form name="wa_form" action="https://api.whatsapp.com/send" target="_new">
+       <input type="hidden" name="text" value=""/>
+       <input type="hidden" name="phone" value=""/>
+    </form>    
+  
+  </body>
+</html>
+
