@@ -1,0 +1,35 @@
+<html>
+  <head>
+    
+    <script>
+      
+       function parseData() {
+         var content = document.forms[0].json_data.text;
+         alert(content);
+       }
+      
+       function presentData () {
+         
+       }
+      
+    </script>
+    
+  </head>
+   
+  <body>
+    
+    <form name="rider_form">
+      <textarea name="json_data"></textarea>
+      
+      <input type="button" onSubmit="parseData();"></input>
+   
+    </form>
+   
+    <table id="rider_table">
+    </table>
+  
+     
+  </body>
+  
+  
+</html>
