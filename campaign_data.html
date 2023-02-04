@@ -31,7 +31,7 @@
                                  "<td>" + (i+1) + "</td>";
            
            for ( f = 0 ; f < field_array.length ; f++ ) {
-              table_id.innerHTML += "<td>" + eval("rider_rec." + fields[f]) + "</td>";
+              table_id.innerHTML += "<td>" + eval("rider_rec." + field_array[f]) + "</td>";
            }
      
 
@@ -59,7 +59,7 @@
     <input type="text" name="fields" value="partner_ieo_lang_pref"></input>
     </form>
     <br/>
-    Ppt data v3<br/>
+    Ppt data v4<br/>
     <table id="rider_table" border="1">
     </table>
 
