@@ -6,7 +6,7 @@
        function parseData() {
          var content = document.forms[0].json_data.value;
          var table_id = document.getElementById("rider_table");
-         var fields = document.forms[0].field.value;
+         var fields = document.forms[0].fields.value;
          fields = "rider_rec." + fields;
          
          var json_obj = JSON.parse(content);
@@ -54,7 +54,7 @@
     <input type="text" name="fields" value="partner_ieo_lang_pref"></input>
     </form>
     <br/>
-    Ppt data v1<br/>
+    Ppt data v2<br/>
     <table id="rider_table" border="1">
     </table>
 
