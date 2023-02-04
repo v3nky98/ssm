@@ -6,11 +6,14 @@
        function parseData() {
          var content = document.forms[0].json_data.value;
          var table_id = document.getElementById("rider_table");
-
+         var fields = document.forms[0].field.value;
+         fields = "rider_rec." + fields;
+         
          var json_obj = JSON.parse(content);
 
          var riders = json_obj.result.length;
 
+         
          for ( i = 0 ; i < riders ; i++ ) {
            var rider_rec = json_obj.result.records[i];
 
@@ -21,12 +24,12 @@
              table_id.innerHTML += "<td>" + rider_rec.contact_id_fkey[1] + "</td>";
            table_id.innerHTML += "</tr>";
 */
-
+           
            table_id.innerHTML += "<tr>" +
                                  "<td>" + (i+1) + "</td>" +
                                  "<td>" + rider_rec.partner_whatsapp + "</td>" + 
                                  "<td>" + rider_rec.partner_id[1] + "</td>" + 
-                                 "<td>" + rider_rec.partner_ieo_lang_pref + "</td>" +
+                                 "<td>" + eval(fields) + "</td>" +
                                  "</tr> <br/>";
          }
        }
@@ -48,10 +51,10 @@
       <textarea name="json_data" rows="10" cols="50"></textarea>
       <br/><br/>
       <input type="button" value="Extract" onClick="parseData();"></input>
-
+    <input type="text" name="fields" value="partner_ieo_lang_pref"></input>
     </form>
     <br/>
-    Ppt data <br/>
+    Ppt data v1<br/>
     <table id="rider_table" border="1">
     </table>
 
