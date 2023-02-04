@@ -7,7 +7,7 @@
          var content = document.forms[0].json_data.value;
          var table_id = document.getElementById("rider_table");
          var fields = document.forms[0].fields.value;
-         fields = "rider_rec." + fields;
+         var field_array=fields.split(",");
          
          var json_obj = JSON.parse(content);
 
@@ -23,14 +23,19 @@
              table_id.innerHTML += "<td>" + rider_rec.registration_whatsapp_number + "</td>";
              table_id.innerHTML += "<td>" + rider_rec.contact_id_fkey[1] + "</td>";
            table_id.innerHTML += "</tr>";
+           
+           rider_rec.partner_id[1]
 */
            
            table_id.innerHTML += "<tr>" +
-                                 "<td>" + (i+1) + "</td>" +
-                                 "<td>" + rider_rec.partner_whatsapp + "</td>" + 
-                                 "<td>" + rider_rec.partner_id[1] + "</td>" + 
-                                 "<td>" + eval(fields) + "</td>" +
-                                 "</tr> <br/>";
+                                 "<td>" + (i+1) + "</td>";
+           
+           for ( f = 0 ; f < fields ; f++ ) {
+              table_id.innerHTML += "<td>" + eval("rider_rec." + fields[f]) + "</td>";
+           }
+     
+
+            table_id.innerHTML += "</tr> <br/>";
          }
        }
 
