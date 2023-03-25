@@ -13,19 +13,11 @@
 
          var riders = json_obj.result.length;
 
+         table_id.innerHTML = "";
+         table_id.cols = field_array.length;
          
          for ( i = 0 ; i < riders ; i++ ) {
            var rider_rec = json_obj.result.records[i];
-
-/*
-           table_id.innerHTML += "<tr>";
-             table_id.innerHTML += "<td>" + (i+1) + "</td>";
-             table_id.innerHTML += "<td>" + rider_rec.registration_whatsapp_number + "</td>";
-             table_id.innerHTML += "<td>" + rider_rec.contact_id_fkey[1] + "</td>";
-           table_id.innerHTML += "</tr>";
-           
-           rider_rec.partner_id[1]
-*/
            
            table_id.innerHTML += "<tr>" +
                                  "<td>" + (i+1) + "</td>";
@@ -59,7 +51,7 @@
     <input type="text" name="fields" value="partner_ieo_lang_pref"></input>
     </form>
     <br/>
-    Ppt data v4<br/>
+    Ppt data v5<br/>
     <table id="rider_table" border="1">
     </table>
 
