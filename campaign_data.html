@@ -16,17 +16,22 @@
          table_id.innerHTML = "";
          table_id.cols = field_array.length;
          
+  
+         
+         
+         
          for ( i = 0 ; i < riders ; i++ ) {
            var rider_rec = json_obj.result.records[i];
+
+           var rowCount = table_id.rows.length;
+           var row = table_id.insertRow(rowCount);
            
-           table_id.innerHTML += "<tr><td>" + (i+1) + "</td>" ; 
+           row.insertCell(0).innerHTML = (i+1); 
            
            for ( f = 0 ; f < field_array.length ; f++ ) {
-              table_id.innerHTML += "<td>" + eval("rider_rec." + field_array[f]) + "</td>";
+              row.insertCell(f+1).innerHTML = eval("rider_rec." + field_array[f]);
            }
-     
-            table_id.innerHTML += "</tr>";
-           window.console = "row";
+
          }
        }
 
