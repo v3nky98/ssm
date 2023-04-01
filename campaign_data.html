@@ -46,12 +46,29 @@
   </head>
 
   <body>
+    Step 1 <br>
+    Login to Santosha and Navigate to Call Campaigns <br>
+
+    Step 2 <br>
+    Click F12 (Chrome/IE/Edge) to open Developer Tools & Navigate to the Network tab<br>
+
+    Step 3 <br>
+    Open the "Test Campaign" in the "Closed" state section and Use the "Add People to Call" button to open search<br>
+
+    Step 4 <br> 
+    Perform the necessary search and when results appear look for the last "search_read" request in the Network tab (in Developer Tools window) <br/>
+    
+    Step 5 <br>
+    Copy the content from the "Response" tab of the "search_read" request <br>
+    
+    Step 6 <br>
+    Paste the content in the text area below
 
     <form name="rider_form">
-      Paste Rider data (JSON) <br/>
       <textarea name="json_data" rows="10" cols="50"></textarea>
       <br/><br/>
       <input type="button" value="Extract" onClick="parseData();"></input>
+      Specify the fields from the content to extract <br>
     <input type="text" name="fields" value="name,phone,whatsapp_number"></input>
     </form>
     <br/>
